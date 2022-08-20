@@ -37,9 +37,19 @@ const deleteTask = async (req, res) => {
     });
 }
 
+const updateTask = async (req, res) => {
+    const { name, done } = req.body;
+    const id = req.params.id;
+    await pool.query('UPDATE lista_quehaceres.task SET name=$1, done=$2 WHERE id = $3', [name, done, id]);
+    res.status(200).json({
+        message: 'User updated succesfully'
+    });
+}
+
 module.exports = {
     getTasks,
     getTaskById,
     createTask,
-    deleteTask
+    deleteTask,
+    updateTask
 }
